@@ -1128,7 +1128,7 @@ public class KeyguardIndicationController {
             boolean useMisalignmentColor = false;
             mLockScreenIndicationView.setVisibility(View.GONE);
             mTopIndicationView.setVisibility(VISIBLE);
-            CharSequence newIndication;
+            CharSequence newIndication = "";
             boolean setWakelock = false;
 
             if (!TextUtils.isEmpty(mBiometricMessage)) {
@@ -1151,8 +1151,25 @@ public class KeyguardIndicationController {
                 newIndication = computePowerIndication();
                 setWakelock = animate;
             } else {
-                newIndication = NumberFormat.getPercentInstance()
-                        .format(mBatteryLevel / 100f);
+                String batteryTemp = com.android.internal.util.crdroid.Utils.batteryTemperature(mContext, false);
+                String cpuTemp = com.android.internal.util.crdroid.Utils.batteryTemperature(mContext, false);
+                switch (getAmbientShowSettings()) {
+                    case 0: // Show battery level
+                        newIndication = NumberFormat.getPercentInstance()
+                                .format(mBatteryLevel / 100f);
+                        break;
+                    case 1: // Battery level & battery temperature
+                        newIndication = NumberFormat.getPercentInstance()
+                                .format(mBatteryLevel / 100f) +
+                                " | " + batteryTemp;
+                        break;
+                    case 2: // Battery level, battery temperature & cpu temperature
+                        newIndication = NumberFormat.getPercentInstance()
+                                .format(mBatteryLevel / 100f) +
+                                " | " + batteryTemp + " | " + cpuTemp;
+                        break;
+                }
+                setWakelock = false;
             }
 
             if (!TextUtils.equals(mTopIndicationView.getText(), newIndication)) {
@@ -1186,6 +1203,11 @@ public class KeyguardIndicationController {
         mTopIndicationView.setText(null);
         mLockScreenIndicationView.setVisibility(View.VISIBLE);
         updateLockScreenIndications(animate, getCurrentUser());
+    }
+
+    private int getAmbientShowSettings() {
+        return Settings.System.getIntForUser(mContext.getContentResolver(),
+            Settings.System.AMBIENT_SHOW_SETTINGS, 0, UserHandle.USER_CURRENT);
     }
 
     /**

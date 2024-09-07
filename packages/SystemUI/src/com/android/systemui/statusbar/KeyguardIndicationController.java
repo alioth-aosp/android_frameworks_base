@@ -1161,7 +1161,7 @@ public class KeyguardIndicationController {
             } else {
                 String batteryLevel = NumberFormat.getPercentInstance().format(mBatteryLevel / 100f);
                 String batteryTemp = com.android.internal.util.crdroid.Utils.batteryTemperature(mContext, false);
-                String cpuTemp = com.android.internal.util.crdroid.Utils.batteryTemperature(mContext, false);
+                String cpuTemp = com.android.internal.util.crdroid.Utils.getCPUTemp(mContext);
 
                 Drawable batteryIcon = mContext.getDrawable(R.drawable.ic_ambient_battery);
                 Drawable cpuIcon = mContext.getDrawable(R.drawable.ic_ambient_cpu);

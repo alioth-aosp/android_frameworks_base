@@ -44,6 +44,7 @@ public class RisingSettingsConstants {
     public static final String LOCKSCREEN_WIDGETS_ENABLED = "lockscreen_widgets_enabled";
     public static final String LOCKSCREEN_WIDGETS = "lockscreen_widgets";
     public static final String LOCKSCREEN_WIDGETS_EXTRAS = "lockscreen_widgets_extras";
+    public static final String SHOW_CONTEXTUAL_DASHBOARD_MESSAGES = "show_contextual_dashboard_messages";
 
     public static final String[] SYSTEM_SETTINGS_KEYS = {
         STATUSBAR_CLOCK_CHIP,
@@ -59,6 +60,7 @@ public class RisingSettingsConstants {
         LOCKSCREEN_WIDGETS_ENABLED,
         LOCKSCREEN_WIDGETS,
         LOCKSCREEN_WIDGETS_EXTRAS,
+        SHOW_CONTEXTUAL_DASHBOARD_MESSAGES,
         "lockscreen_widgets_style",
         "qs_widgets_enabled",
         "qs_tile_label_size",

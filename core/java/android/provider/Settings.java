@@ -6825,6 +6825,12 @@ public final class Settings {
         public static final String LOCKSCREEN_ENABLE_POWER_MENU = "lockscreen_enable_power_menu";
 
         /**
+         * Optional settings homepage contextual messages
+         * @hide
+         */
+        public static final String SHOW_CONTEXTUAL_DASHBOARD_MESSAGES = "show_contextual_dashboard_messages";
+
+        /**
          * @hide
          */
         public static final String UDFPS_ANIM_STYLE = "udfps_anim_style";

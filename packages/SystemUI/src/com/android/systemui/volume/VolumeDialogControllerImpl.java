@@ -577,13 +577,6 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
         final boolean showVibrateHint = (flags & AudioManager.FLAG_SHOW_VIBRATE_HINT) != 0;
         final boolean showSilentHint = (flags & AudioManager.FLAG_SHOW_SILENT_HINT) != 0;
         boolean changed = false;
-        
-        boolean hapticOnSliderEnabled = Settings.System.getIntForUser(
-            mContext.getContentResolver(), 
-            Settings.System.HAPTIC_ON_SLIDER, 
-            1, 
-            mUserTracker.getUserId()) != 0;
-
         if (showUI) {
             changed |= updateActiveStreamW(stream);
         }
@@ -606,11 +599,9 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
             Events.writeEvent(Events.EVENT_KEY, stream, lastAudibleStreamVolume);
             mCallbacks.onVolumeChangedFromKey();
         }
-        if (Settings.System.getInt(mContext.getContentResolver(), Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) != 0 
-        && hapticOnSliderEnabled) {
-        AsyncTask.execute(() -> 
-            mVibrator.vibrate(VibrationEffect.get(VibrationEffect.EFFECT_TICK))
-            );
+        if (Settings.System.getInt(mContext.getContentResolver(), Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) != 0 && Settings.System.getInt(mContext.getContentResolver(), Settings.System.HAPTIC_ON_SLIDER, 1) != 0) {
+                AsyncTask.execute(() ->
+                        mVibrator.vibrate(VibrationEffect.get(VibrationEffect.EFFECT_TICK)));
         }
         return changed;
     }

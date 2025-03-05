@@ -17,10 +17,13 @@
 package com.android.systemui.statusbar;
 
 import android.app.Notification;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
@@ -183,8 +186,10 @@ public class OnGoingActionProgressController implements NotificationListener.Not
      * @implNote In future this function should be refactored to integrate TunerService with it;
      * @return whether progressbar chip is enabled
      */
-    private boolean isEnabled(){
-        return mContext.getResources().getBoolean(R.bool.config_enableOngoingProgressBarChip);
+    private boolean isEnabled() {
+        return (Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.CONFIG_ONGOING_PROGRESSBAR, 0,
+                UserHandle.USER_CURRENT) == 1);
     }
 
     /**

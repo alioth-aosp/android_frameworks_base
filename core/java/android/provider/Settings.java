@@ -14309,18 +14309,6 @@ public final class Settings {
         public static final String MEDIA_CONTROLS_ALWAYS_SHOW_TIME = "media_controls_always_show_time";
 
         /**
-         * Show lyric in status bar when playing music
-         * <ul>
-         *    <li> 0 = disabled </li>
-         *    <li> 1 = enabled </li>
-         * </ul>
-         *
-         * @hide
-         */
-        @Readable
-        public static final String STATUS_BAR_SHOW_LYRIC = "status_bar_show_lyric";
-
-        /**
          * Indicates whether extra dim turns on automatically
          * 0 = disabled (default)
          * 1 = from sunset to sunrise

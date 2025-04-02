@@ -7447,16 +7447,6 @@ public final class Settings {
         public static final String ARCANE_IDLE_MANAGER = "arcane_idle_manager";
 
         /**
-         * What to show at the bottom of the Ambient display
-         * 0: Nothing.
-         * 1: Battery Percentage.
-         * 2: Battery Temperature.
-         * 3: Battery Percentage & Temperature Together.
-         * @hide
-         */
-        public static final String AMBIENT_SHOW_SETTINGS = "ambient_show_settings";
-
-        /**
          * Clock font size
          * @hide
          */

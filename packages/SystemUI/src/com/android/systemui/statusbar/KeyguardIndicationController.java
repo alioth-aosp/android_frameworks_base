@@ -60,7 +60,6 @@ import android.content.pm.UserInfo;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.hardware.biometrics.BiometricSourceType;
 import android.os.BatteryManager;
 import android.os.Handler;
@@ -74,10 +73,8 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.DeviceConfig;
 import android.provider.Settings;
-import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.format.Formatter;
-import android.text.style.ImageSpan;
 import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
@@ -1155,82 +1152,21 @@ public class KeyguardIndicationController {
                 setWakelock = animate;
             } else {
                 String batteryTemp = com.android.internal.util.crdroid.Utils.batteryTemperature(mContext, false);
-                String cpuTemp = com.android.internal.util.crdroid.Utils.getCPUTemp(mContext);
-
-                Drawable batteryIcon = mContext.getDrawable(R.drawable.ic_ambient_battery);
-                Drawable cpuIcon = mContext.getDrawable(R.drawable.ic_ambient_cpu);
-                Drawable temperatureIcon = mContext.getDrawable(R.drawable.ic_ambient_temperature);
-
-                if (batteryIcon != null) {
-                    batteryIcon.setBounds(0, 0, batteryIcon.getIntrinsicWidth(), batteryIcon.getIntrinsicHeight());
-                }
-
-                if (cpuIcon != null) {
-                    cpuIcon.setBounds(0, 0, cpuIcon.getIntrinsicWidth(), cpuIcon.getIntrinsicHeight());
-                }
-
-                if (temperatureIcon != null) {
-                    temperatureIcon.setBounds(0, 0, temperatureIcon.getIntrinsicWidth(), temperatureIcon.getIntrinsicHeight());
-                }
-
-                SpannableStringBuilder indicationBuilder = new SpannableStringBuilder();
-
+                String cpuTemp = com.android.internal.util.crdroid.Utils.batteryTemperature(mContext, false);
                 switch (getAmbientShowSettings()) {
                     case 1: // Show battery level
-                        if (!ambientShowSettingsIcon()) {
-                            newIndication = NumberFormat.getPercentInstance()
-                                    .format(mBatteryLevel / 100f);
-                        } else {
-                            indicationBuilder.append(" ");
-                            if (batteryIcon != null) {
-                                indicationBuilder.setSpan(new ImageSpan(batteryIcon), indicationBuilder.length() - 1, indicationBuilder.length(), SpannableStringBuilder.SPAN_INCLUSIVE_EXCLUSIVE);
-                            }
-                            indicationBuilder.append(NumberFormat.getPercentInstance().format(mBatteryLevel / 100f));
-                            newIndication = indicationBuilder;
-                        }
+                        newIndication = NumberFormat.getPercentInstance()
+                                .format(mBatteryLevel / 100f);
                         break;
                     case 2: // Battery level & battery temperature
-                        if (!ambientShowSettingsIcon()) {
-                            newIndication = NumberFormat.getPercentInstance()
-                                    .format(mBatteryLevel / 100f) +
-                                    " | " + batteryTemp;
-                        } else {
-                            indicationBuilder.append(" ");
-                            if (batteryIcon != null) {
-                                indicationBuilder.setSpan(new ImageSpan(batteryIcon), indicationBuilder.length() - 1, indicationBuilder.length(), SpannableStringBuilder.SPAN_INCLUSIVE_EXCLUSIVE);
-                            }
-                            indicationBuilder.append(NumberFormat.getPercentInstance().format(mBatteryLevel / 100f));
-                            indicationBuilder.append(" | ");
-                            if (temperatureIcon != null) {
-                                indicationBuilder.setSpan(new ImageSpan(temperatureIcon), indicationBuilder.length() - 1, indicationBuilder.length(), SpannableStringBuilder.SPAN_INCLUSIVE_EXCLUSIVE);
-                            }
-                            indicationBuilder.append(batteryTemp);
-                            newIndication = indicationBuilder;
-                        }
+                        newIndication = NumberFormat.getPercentInstance()
+                                .format(mBatteryLevel / 100f) +
+                                " | " + batteryTemp;
                         break;
                     case 3: // Battery level, battery temperature & cpu temperature
-                        if (!ambientShowSettingsIcon()) {
-                            newIndication = NumberFormat.getPercentInstance()
-                                    .format(mBatteryLevel / 100f) +
-                                    " | " + batteryTemp + " | " + cpuTemp;
-                        } else {
-                            indicationBuilder.append(" ");
-                            if (batteryIcon != null) {
-                                indicationBuilder.setSpan(new ImageSpan(batteryIcon), indicationBuilder.length() - 1, indicationBuilder.length(), SpannableStringBuilder.SPAN_INCLUSIVE_EXCLUSIVE);
-                            }
-                            indicationBuilder.append(NumberFormat.getPercentInstance().format(mBatteryLevel / 100f));
-                            indicationBuilder.append(" | ");
-                            if (temperatureIcon != null) {
-                                indicationBuilder.setSpan(new ImageSpan(temperatureIcon), indicationBuilder.length() - 1, indicationBuilder.length(), SpannableStringBuilder.SPAN_INCLUSIVE_EXCLUSIVE);
-                            }
-                            indicationBuilder.append(batteryTemp);
-                            indicationBuilder.append(" | ");
-                            if (cpuIcon != null) {
-                                indicationBuilder.setSpan(new ImageSpan(cpuIcon), indicationBuilder.length() - 1, indicationBuilder.length(), SpannableStringBuilder.SPAN_INCLUSIVE_EXCLUSIVE);
-                            }
-                            indicationBuilder.append(cpuTemp);
-                            newIndication = indicationBuilder;
-                        }
+                        newIndication = NumberFormat.getPercentInstance()
+                                .format(mBatteryLevel / 100f) +
+                                " | " + batteryTemp + " | " + cpuTemp;
                         break;
                     case 0: // Hidden
                     default:
@@ -1276,11 +1212,6 @@ public class KeyguardIndicationController {
     private int getAmbientShowSettings() {
         return Settings.System.getIntForUser(mContext.getContentResolver(),
             Settings.System.AMBIENT_SHOW_SETTINGS, 0, UserHandle.USER_CURRENT);
-    }
-
-    private boolean ambientShowSettingsIcon() {
-        return Settings.System.getIntForUser(mContext.getContentResolver(),
-            Settings.System.AMBIENT_SHOW_SETTINGS_ICONS, 0, UserHandle.USER_CURRENT) != 0;
     }
 
     /**

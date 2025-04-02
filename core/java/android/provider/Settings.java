@@ -7457,12 +7457,6 @@ public final class Settings {
         public static final String AMBIENT_SHOW_SETTINGS = "ambient_show_settings";
 
         /**
-         * Ambient settings show icons
-         * @hide
-         */
-        public static final String AMBIENT_SHOW_SETTINGS_ICONS = "ambient_show_settings_icons";
-
-        /**
          * Clock font size
          * @hide
          */
